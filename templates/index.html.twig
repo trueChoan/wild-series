@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>wild series</title>
-	</head>
-	<body>
-		<h1>Bienvenue !
-		</h1>
+{% extends 'base.html.twig' %}
 
-	</body>
-</html>
+{% block title %}Wild Series
+{% endblock %}
+
+{% block body %}
+
+	<div class="h-screen flex flex-col items-center justify-center">
+		<h1 class="text-gray-500 text-4xl mb-4">Index Hello world</h1>
+		<button class="px-4 py-2 bg-green hover:bg-teal-600 text-white rounded">
+			Click here
+		</button>
+	</div>
+{% endblock %}

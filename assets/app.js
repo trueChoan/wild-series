@@ -10,3 +10,8 @@ import './styles/app.css';
 
 // start the Stimulus application
 import './bootstrap';
+
+//flowbite
+import './flowbite.js';
+
+console.log('Hello Webpack Encore !')
