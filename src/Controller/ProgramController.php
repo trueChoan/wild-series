@@ -19,7 +19,7 @@ class ProgramController extends AbstractController
     }
 
     #[Route('/{id}', methods: ['GET'], name: 'show', requirements: ['id' => '\d+'])]
-    public function show($id): Response
+    public function show($id = 1): Response
     {
         return $this->render('program/show.html.twig', [
             'id' => $id,

@@ -1,8 +1,5 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
-img {
-    width: 100px;
-}
+@import './global.css';
+@import './_variables.css';
