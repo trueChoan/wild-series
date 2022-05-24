@@ -7,7 +7,8 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
-
+import './styles/_variables.css';
+import './styles/global.css';
 // start the Stimulus application
 import './bootstrap';
 

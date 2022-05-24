@@ -12,6 +12,10 @@ module.exports = {
         'dark' : '#16181E',
         'green': '#00B9AE',
         'light-grey' : '#E0E0E0',
+      },
+      fontFamily: {
+        'bangers': ['Bangers', 'cursive'],
+        'baloo': ['"Baloo 2"', 'cursive']
       }
     },
   },
