@@ -16,6 +16,12 @@ module.exports = {
       fontFamily: {
         'bangers': ['Bangers', 'cursive'],
         'baloo': ['"Baloo 2"', 'cursive']
+      },
+      maxWidth: {
+        'xs': '15rem',
+      },
+      width: {
+        '1/1': '75%',
       }
     },
   },
