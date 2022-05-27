@@ -4,14 +4,15 @@
 {% endblock %}
 
 {% block body %}
-	<!-- This is an example component -->
+
 	<div class="max-w-2xl mx-auto">
+		<h1 class="ml-10 text-dark text-4xl mb-4">Dernières sorties</h1>
 
 		<div
 			id="default-carousel" class="relative" data-carousel="static">
 			<!-- Carousel wrapper -->
 			<div
-				class="overflow-hidden w-120 relative h-56 rounded-lg sm:h-64 xl:h-80 2xl:h-96">
+				class="overflow-hidden relative h-56 mt-10 rounded-lg sm:h-64 xl:h-80 2xl:h-96">
 				<!-- Item 1 -->
 				<div class="hidden duration-700 ease-in-out" data-carousel-item>
 					<span class="absolute top-1/2 left-1/2 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 sm:text-3xl dark:text-gray-800">First Slide</span>
@@ -51,58 +52,80 @@
 			</button>
 		</div>
 
-		<p class="mt-5 text-white">This carousel slider component is part of a larger, open-source library of Tailwind CSS components. Learn
-																																																					more
-																																																					by going to the official
+		<p class="mt-5 text-yellow">This carousel slider component is part of a larger, open-source library of Tailwind CSS components. Learn
+																																																																																																																																																																																																																																																																																																																																	more
+																																																																																																																																																																																																																																																																																																																																	by going to the official
 
 		</p>
 	</div>
 	<div class="h-screen flex flex-col items-center justify-center">
-		<h1 class="text-gray-500 text-4xl mb-4">Index Hello world</h1>
+		<h1 class="text-dark text-4xl mb-4">Tous les Programmes</h1>
 		<a href="{{path('program_index')}}" class="px-4 py-2 bg-green hover:bg-teal-600 text-white rounded">
-			Click here
+			Cliquez ici
 		</a>
 	</div>
+	<div class="reco w-full bg-dark mt-10  ">
 
-	<div class="py-3 sm:max-w-xl sm:mx-auto my-20">
-		<div class="bg-dark shadow-lg border-gray-100 max-h-80	 border sm:rounded-3xl p-8 flex space-x-8">
-			<div class="h-48 overflow-visible w-1/2 relative">
-				<div class="absolute top-0">
-					<div class="flex items-center pt-2 px-5">
-						{% set i = 4 %}
-						{% if i>0 %}
-							{% for v in range (1, i) %}
-								<img class="w-5 h-5 text-yellow" src="{{asset('build/images/star.svg')}}" alt="">
+		<h1 class="mt-10  mx-auto text-center text-yellow text-4xl mb-4">Recommandations</h1>
+		<div class="wrapper w-3/4 max-w-4xl  justify-center mx-auto flex flex-wrap ">
 
-							{% endfor %}
-						{% endif %}
-						{% set k = 5 - 4  %}
-						{% if k > 0 %}
-							{% for v in 1..k %}
-								<img class="w-5 h-5 text-yellow" src="{{asset('build/images/grey-star.svg')}}" alt="">
+			{% for program in programs %}
 
-							{% endfor %}
-						{% endif %}
-						<p class="ml-2 text-sm font-medium text-ligth-grey dark:text-gray-400">4/5</p>
+				<div class="py-1 px-2  max-w-xs  mx-auto my-5 relative flip">
+					<div class="bg-dark shadow-lg  flip-content  rounded-3xl  flex">
+						<div class="flip-front relative">
+							<div class="absolute top-0 text-light-grey font-bold  rounded-t-3xl w-full bg-dark-light">
+								<h2 class="text-2xl font-baloo text-grey-light px-5 pt-2">{{ program.id }}
+									/
+									{{program.title}}</h2>
+								<div class="flex items-center px-5">
+									{% set i = program.note %}
+									{% if i>0 %}
+										{% for v in range (1, i) %}
+											<img class="w-5 h-5 text-yellow" src="{{asset('build/images/star.svg')}}" alt="">
+										{% endfor %}
+									{% endif %}
+									{% set k = 5 -program.note  %}
+									{% if k > 0 %}
+										{% for v in 1..k %}
+											<img class="w-5 h-5 text-yellow" src="{{asset('build/images/grey-star.svg')}}" alt="">
+										{% endfor %}
+									{% endif %}
+									<p class="ml-2 text-sm font-medium text-ligth-grey dark:text-gray-400">{{program.note}}/5</p>
+								</div>
+							</div>
+							<img class="rounded-3xl shadow-lg" src="{{asset('build/images/'~ program.poster)}}" alt="">
+						</div>
+						<div class="flip-back border-yellow rounded-3xl  border">
+							<div class="flex flex-col space-y-2 ">
+								<div class="flex justify-center">
+									<div class="flex justify-between">
+
+										<p class="ml-2 text-sm font-medium text-ligth-grey dark:text-gray-400">{{program.title}}</p>
+									</div>
+								</div>
+								<div>
+									<div class="text-sm text-yellow">{{program.category.name}}</div>
+
+								</div>
+								<div class="flex justify-center space-x-2">
+									<button type="button" class="min-w-fit	 flex justify-around	 text-white bg-green hover:bg-teal-600 focus:ring-4 rounded-lg text-sm p-2.5 text-center inline-flex items-center mx-auto ">
+										<img src="{{asset('build/images/add.svg')}}" alt="">
+										<p class='ml-2'>Favoris</p>
+									</button>
+									<a href='{{path('program_show', {id: program.id} )}}' type="button" class="min-w-fit	 flex justify-around	 text-white bg-green hover:bg-teal-600 focus:ring-4 rounded-lg text-sm p-2.5 text-center inline-flex items-center mx-auto ">
+										<img src="{{asset('build/images/loupe.svg')}}" alt="">
+										<p class='ml-2'>Voir</p>
+									</a>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
+			{% endfor %}
 
-				<img class="rounded-3xl shadow-lg" src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/1LRLLWGvs5sZdTzuMqLEahb88Pc.jpg" alt="">
-			</div>
-			<div class="flex flex-col w-1/2 space-y-4">
-				<div class="flex justify-between items-start">
-					<h2 class="text-3xl text-green">Sweet Tooth: El niño ciervo</h2>
-
-					<div class="bg-yellow font-bold rounded-xl p-2">7.2</div>
-				</div>
-				<div>
-					<div class="text-sm text-yellow">Series</div>
-					<div class="text-lg text-gray-800">2019</div>
-				</div>
-				<p class=" text-yellow font-baloo max-h-40 overflow-y-hidden">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-				<div class="flex text-2xl text-green font-bold text-a">Regarder</div>
-			</div>
 
 		</div>
 	</div>
+	<div class="keep-watching w-full bg-yellow">Continuer à regarder</div>
 {% endblock %}

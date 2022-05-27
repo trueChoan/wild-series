@@ -4,11 +4,12 @@
 {% endblock %}
 
 {% block body %}
-	<h1>{{ website }}
-		index</h1>
-
 
 	<div class="flex justify-around flex-wrap mx-auto lg:w-1/1">
+		{% if programs is empty %}
+			<h1 class="ml-10 text-dark text-4xl mb-4">Aucun résultat</h1>
+
+		{% endif %}
 		{% for program in programs %}
 
 			<div class="py-1 px-2  max-w-xs  mx-auto my-5 relative flip">

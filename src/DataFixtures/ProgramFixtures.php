@@ -11,12 +11,14 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
     public const PROGRAMS = [
-        ['name' => 'The Office', 'category' => 'Comedie'],
-        ['name' => 'Walking Dead', 'category' => 'Horreur'],
-        ['name' => 'Seigneur des anneaux', 'category' => 'Fantastique'],
-        ['name' => 'Moon Knight', 'category' => 'Fantastique'],
-        ['name' => 'Formule 1 drive to survive', 'category' => 'Sport'],
-        ['name' => 'Rick et Morty', 'category' => 'Aventure']
+        ['name' => 'The Office', 'poster' => 'office.jpg',  'category' => 'Comedie'],
+        ['name' => 'Walking Dead',  'poster' => 'walking.jpg', 'category' => 'Horreur'],
+        ['name' => 'Seigneur des anneaux',  'poster' => 'sda.jpg', 'category' => 'Fantastique'],
+        ['name' => 'GOT',  'poster' => 'got.jpg', 'category' => 'Fantastique'],
+        ['name' => 'Dune',  'poster' => 'dune.jpg', 'category' => 'Fantastique'],
+        ['name' => 'Moon Knight',  'poster' => 'moon-knight.jpg', 'category' => 'Fantastique'],
+        ['name' => 'Formule 1 drive to survive',  'poster' => 'drive.jpeg', 'category' => 'Sport'],
+        ['name' => 'Rick et Morty',  'poster' => 'morty.jpg', 'category' => 'Aventure']
 
     ];
 
@@ -26,6 +28,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             $program = new Program();
             $program->setTitle($show['name']);
             $program->setSynopsis("société de vente de papier, Dunder Mifflin");
+            $program->setPoster($show['poster']);
             $program->setNote(rand(0, 5));
             $program->setCategory($this->getReference('category_' . $show['category']));
             $manager->persist($program);

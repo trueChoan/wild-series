@@ -1,4 +1,4 @@
-<nav class="border-gray-200 px-2 mb-10 sm:px-4 py-5 bg-dark text-yellow">
+<nav class="border-gray-200 px-2 mb-20 sm:px-4 py-5 bg-dark text-yellow">
 	<div class="container flex flex-wrap justify-between items-center mx-auto">
 		<a href="/" class="flex items-center">
 			<img src="{{ asset('build/images/logo.png') }}" class="mr-3 h-6 sm:h-9 img-logo" alt="Wild series logo">
@@ -41,12 +41,12 @@
 				</svg>
 			</button>
 		</div>
-		<div class="hidden justify-between items-center w-full md:flex md:w-auto md:order-1" id="mobile-menu-2">
-			<ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+		<div class="hidden z-5000  justify-between items-center w-full md:flex md:w-auto md:order-1" id="mobile-menu-2">
+			<ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium z-5000 ">
 
 
 				<li>
-					<button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex  text-green items-center justify-between w-full py-2 pl-3 pr-4 font-medium md:hover:text-teal-600 ">Catégories
+					<button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex  text-green items-center z-5000 justify-between w-full py-2 pl-3 pr-4 font-medium md:hover:text-teal-600 ">Catégories
 						<svg class="w-4 h-4 ml-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
 							<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
 						</svg>
@@ -65,7 +65,7 @@
 							</li>
 						</ul>
 						<div class="py-1">
-							<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">Par genres</a>
+							<a href="{{path('category_index')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">Toutes les Categories</a>
 						</div>
 					</div>
 				</li>
