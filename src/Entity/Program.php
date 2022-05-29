@@ -34,6 +34,9 @@ class Program
     #[ORM\OneToMany(mappedBy: 'program', targetEntity: Season::class)]
     private $seasons;
 
+    #[ORM\Column(type: 'integer')]
+    private $season_number;
+
     public function __construct()
     {
         $this->seasons = new ArrayCollection();
@@ -130,6 +133,18 @@ class Program
                 $season->setProgram(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSeasonNumber(): ?int
+    {
+        return $this->season_number;
+    }
+
+    public function setSeasonNumber(int $season_number): self
+    {
+        $this->season_number = $season_number;
 
         return $this;
     }

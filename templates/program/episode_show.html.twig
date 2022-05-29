@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{program.title}}
+{% endblock %}
+
+{% block body %}
+	<div class="mx-20 space-y-4">
+		<h1 class="h1">{{program.title}}</h1>
+		<h3>Saison :
+			{{season.number}}
+		</h3>
+		<div class=" space-y-4 font-baloo ">
+			<p class="font-bold">Episode
+				{{episode.number}}
+				:
+				{{episode.title}}
+			</p>
+			<p class=" space-y-4 font-baloo ">
+				{{episode.synopsis}}
+			</p>
+
+		</div>
+
+	</div>
+	<a class="btn w-fit mx-auto space-y-4 mt-10 hover:bg-teal-600 font-bold" href="{{ path('program_season_show', {'programId': program.id ,'seasonId': season.id }) }}">
+		Retour
+	</a>
+{% endblock %}

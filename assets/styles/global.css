@@ -5,6 +5,10 @@ body {
     height: 100vh;
 }
 
+footer {
+    margin-top: auto;
+}
+
 img-logo {
     width: 50px;
 }
@@ -12,7 +16,7 @@ img-logo {
 .flip {
 
     text-align: center;
-    perspective: 500px;
+    perspective: 800px;
 }
 
 .flip-content {
@@ -25,7 +29,7 @@ img-logo {
 
 .flip:hover .flip-content {
     transform: rotateY(180deg);
-    transition: transform 0.2s;
+    transition: 0.5s;
 }
 
 .flip-front,

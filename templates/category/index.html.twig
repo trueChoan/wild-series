@@ -9,7 +9,7 @@
 	<div class="font-baloo font-bold mx-auto leading-7">
 		<h1>Categories ✅</h1>
 		{% for category in categories %}
-			<a href="{{path('category_show', {id: category.id})}}" class="px-4 py-2 bg-green hover:bg-teal-600 text-white rounded">
+			<a href="{{path('category_show', {categoryName: category.name})}}" class="btn">
 
 				{{category.name}}
 			</a>

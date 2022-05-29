@@ -1,0 +1,54 @@
+<div class="py-1 px-2  max-w-xs  mx-auto my-5 relative flip">
+	<div class="bg-dark-light shadow-lg  flip-content  rounded-3xl  flex">
+		<div class="flip-front relative">
+			<div class="absolute top-0 text-light-grey font-bold  rounded-t-3xl w-full bg-dark-light">
+				<h2 class="text-2xl font-baloo text-grey-light px-5 pt-2">{{ program.id }}
+					/
+					{{program.title}}</h2>
+				<div class="flex items-center px-5">
+					{% set i = program.note %}
+					{% if i>0 %}
+						{% for v in range (1, i) %}
+							<img class="w-5 h-5 text-yellow" src="{{asset('build/images/star.svg')}}" alt="">
+						{% endfor %}
+					{% endif %}
+					{% set k = 5 -program.note  %}
+					{% if k > 0 %}
+						{% for v in 1..k %}
+							<img class="w-5 h-5 text-yellow" src="{{asset('build/images/grey-star.svg')}}" alt="">
+						{% endfor %}
+					{% endif %}
+					<p class="ml-2 text-sm font-medium text-ligth-grey dark:text-gray-400">{{program.note}}/5</p>
+				</div>
+			</div>
+			<img class="rounded-3xl shadow-lg" src="{{asset('build/images/'~ program.poster)}}" alt="">
+		</div>
+		<div class="flip-back border-yellow rounded-3xl  border">
+			<div class="flex flex-col space-y-2 ">
+				<div class="flex justify-center">
+					<div class="flex justify-between">
+
+						<p class="ml-2 text-sm font-medium text-ligth-grey dark:text-gray-400">{{program.title}}</p>
+					</div>
+				</div>
+				<div>
+					<div class="text-sm text-yellow">{{program.category.name}}</div>
+					<div class="text-sm text-light-grey font-baloo mt-2 h-24 overflow-hidden">{{program.synopsis}}
+					</div>
+					<p class='font-baloo text-3xl'>...</p>
+
+				</div>
+				<div class="flex justify-center space-x-2">
+					<button type="button" class="btn-card hover:bg-teal-600 focus:ring-4">
+						<img src="{{asset('build/images/heart.svg')}}" alt="">
+						<p class='ml-2'>Favoris</p>
+					</button>
+					<a href='{{path('program_show', {id: program.id} )}}' type="button" class="btn-card hover:bg-teal-600 focus:ring-4">
+						<img src="{{asset('build/images/loupe.svg')}}" alt="">
+						<p class='ml-2'>Voir</p>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

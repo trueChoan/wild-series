@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wild Series
+{% endblock %}
+
+{% block body %}
+
+	<div class="flex m-20 flex-col items-center justify-center">
+
+
+		<img class="align-self-start  poster w-1/4 mr-3" src="{{asset('build/images/' ~ program.poster)}}" alt="{{ program.title }} poster">
+		<div class="media-body">
+			<h1 class="h1">{{ program.title }}</h1>
+
+			<h2 class="h1 text-2xl">Saison
+				{{  season.number }}</h2>
+			<h2 class="text-2xl font-baloo">Catégorie :
+				{{ program.category.name }}
+				/ année :
+				{{season.year}}
+			</h2>
+			<p class="font-baloo">{{season.description}}</p>
+
+
+		</div>
+		<ul class="mt-10 font-baloo">
+
+			{% for episode in season.episodes %}
+
+				<li>{{episode.number}}
+					--
+					<a class="hover:underline" href="{{path('program_episode_show', {'program_id': program.id, 'season_id': season.id, 'episode_id': episode.id})}}">{{episode.title}}</a>
+
+				</li>
+			{% endfor %}
+		</ul>
+		<a class="btn mt-5" href="{{ path('program_show', {'id': program.id }) }}">
+			Retour à la liste des saisons
+		</a>
+	</div>
+{% endblock %}

@@ -3,3 +3,21 @@
 @tailwind utilities;
 @import './global.css';
 @import './_variables.css';
+
+@layer components {
+    .btn {
+        @apply px-4 py-2 bg-green font-baloo font-bold text-white rounded;
+    }
+
+    ;
+
+    .btn-card {
+        @apply min-w-fit flex font-baloo font-bold justify-around text-white bg-green rounded-lg text-sm p-2 text-center inline-flex items-center mx-auto;
+    }
+
+    ;
+
+    .h1 {
+        @apply text-dark text-4xl mb-4 mt-4;
+    }
+}

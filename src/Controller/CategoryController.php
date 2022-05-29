@@ -19,19 +19,23 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/show/{id}', name: 'show')]
-    public function show(int $id = 77, CategoryRepository $categoryRepository, ProgramRepository $programRepository): Response
+    #[Route('/show/{categoryName}', name: 'show')]
+    public function show(string $categoryName, CategoryRepository $categoryRepository, ProgramRepository $programRepository): Response
     {
-        $categories = $categoryRepository->findOneById($id);
-        if (!$categories) {
+        $category = $categoryRepository->findOneByName($categoryName);
+        if (!$category) {
             throw      $this->createNotFoundException(
-                'Category not found with name : ' . $id . ' in category\'s table'
+                'Category not found with name : ' . $categoryName . ' in category\'s table'
             );
         }
-        $programs = $programRepository->getProgramByCategory($id);
+        $programs = $programRepository->findBy(
+            ['category' => $category],
+            ['id' => 'DESC'],
+            3
+        );
 
         return $this->render('category/show.html.twig',  [
-            'categories' => $categories,
+            'categories' => $category,
             'programs' => $programs
         ]);
     }
