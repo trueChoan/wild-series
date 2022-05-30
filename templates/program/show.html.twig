@@ -10,7 +10,7 @@
 
 		<img class="align-self-start w-1/4 mr-3" src="{{asset('build/images/' ~ program.poster)}}" alt="{{ program.title }} poster">
 		<div class="media-body">
-			<h1 class="mt-0 h1 font-bangers">{{ program.title }}</h1>
+			<h1 class="mt-10 h1 font-bangers">{{ program.title }}</h1>
 			<p>{{ program.synopsis }}</p>
 			<p class="mt-10 font-bold">Catégorie :
 				{{ program.category.name }}</p>
@@ -25,7 +25,7 @@
 			{% endfor %}
 		</div>
 
-		<a class="btn mb-20" href="{{ path('program_index') }}">
+		<a class="btn mb-20 hover:bg-teal-600 " href="{{ path('program_index') }}">
 			Retour à la liste des programmes
 		</a>
 	</div>

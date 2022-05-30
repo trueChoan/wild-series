@@ -56,8 +56,8 @@ class CategoryController extends AbstractController
             // Deal with the submitted data
             // For example : persiste & flush the entity
             $categoryRepository->add($category, true);
-            // And redirect to a route that display the result
-            return $this->redirectToRoute('category_index');
+            // And redirect to a route that display the result avec le code de reponse qui correspond a la redirection
+            return $this->redirectToRoute('category_index', [], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('category/new.html.twig', [
             'form' => $form

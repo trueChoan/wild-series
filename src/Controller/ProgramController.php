@@ -56,6 +56,7 @@ class ProgramController extends AbstractController
         Program $program,
         Season $season,
         int $seasonId,
+        SeasonRepository $seasonRepository,
         EpisodeRepository $episodeRepository
     ): Response {
 
@@ -64,9 +65,20 @@ class ProgramController extends AbstractController
                 'Pas de saison avec id : ' . $seasonId . ' trouvée dans la table'
             );
         }
+        $seasonTotal = $program->getSeasonNumber();
+
+        $seasonNumber = $season->getNumber();
+        $seasonPrev = $seasonRepository->findBy(['number' => $seasonNumber - 1], null, 1) ?? null;
+        $seasonNext = $seasonRepository->findBy(['number' => $seasonNumber + 1], null, 1) ?? null;
+
+        if (isset($seasonNext[0]) && $seasonNext[0]->getNumber() > $seasonTotal) {
+            $seasonNext = null;
+        }
         return $this->render('program/season.html.twig', [
             'program' => $program,
             'season' => $season,
+            'season_prev' => $seasonPrev,
+            'season_next' => $seasonNext,
             'episodes' => $episodeRepository->findAll()
         ]);
     }
@@ -78,6 +90,7 @@ class ProgramController extends AbstractController
         Program $program,
         Season $season,
         Episode $episode,
+        EpisodeRepository $episodeRepository,
         int $episode_id
     ) {
         if (!$episode_id) {
@@ -85,10 +98,15 @@ class ProgramController extends AbstractController
                 'Pas d\'épisode avec id : ' . $episode_id . ' trouvée dans la table'
             );
         }
+        $episodeNumber = $episode->getNumber();
+        $epPrev = $episodeRepository->findBy(['number' => $episodeNumber - 1], null, 1) ?? null;
+        $epNext = $episodeRepository->findBy(['number' => $episodeNumber + 1], null, 1) ?? null;
         return $this->render('program/episode_show.html.twig', [
             'program' => $program,
             'season' => $season,
-            'episode' => $episode
+            'episode' => $episode,
+            'ep_prev' => $epPrev,
+            'ep_next' => $epNext
         ]);
     }
 
@@ -97,7 +115,13 @@ class ProgramController extends AbstractController
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
-        return $this->render('program/new.html.twig', [
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $programRepository->add($program, true);
+            return $this->redirectToRoute('program_index');
+        }
+        return $this->renderForm('program/new.html.twig', [
             'form' => $form
         ]);
     }

@@ -10,7 +10,7 @@
 
 		<img class="align-self-start  poster w-1/4 mr-3" src="{{asset('build/images/' ~ program.poster)}}" alt="{{ program.title }} poster">
 		<div class="media-body">
-			<h1 class="h1">{{ program.title }}</h1>
+			<h1 class="h1 mt-10">{{ program.title }}</h1>
 
 			<h2 class="h1 text-2xl">Saison
 				{{  season.number }}</h2>
@@ -23,7 +23,8 @@
 
 
 		</div>
-		<ul class="mt-10 font-baloo">
+		<h2 class="h1 mt-10 underline">Épisodes</h2>
+		<ul class="mt-1 mb-5 font-baloo">
 
 			{% for episode in season.episodes %}
 
@@ -34,8 +35,20 @@
 				</li>
 			{% endfor %}
 		</ul>
-		<a class="btn mt-5" href="{{ path('program_show', {'id': program.id }) }}">
-			Retour à la liste des saisons
-		</a>
+		<div class="flex">
+			{% if season_prev %}
+				<a class="btn m-5 hover:bg-teal-600 " href="{{ path('program_season_show', {'programId': program.id ,'seasonId': season_prev.0.id }) }}">
+					Prev
+				</a>
+			{% endif %}
+			<a class="btn m-5 hover:bg-teal-600 " href="{{ path('program_show', {'id': program.id }) }}">
+				Retour à la liste des saisons
+			</a>
+			{% if season_next %}
+				<a class="btn m-5 hover:bg-teal-600 " href="{{ path('program_season_show', {'programId': program.id ,'seasonId': season_next.0.id }) }}">
+					Next
+				</a>
+			{% endif %}
+		</div>
 	</div>
 {% endblock %}

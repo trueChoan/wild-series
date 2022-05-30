@@ -23,7 +23,21 @@
 		</div>
 
 	</div>
-	<a class="btn w-fit mx-auto space-y-4 mt-10 hover:bg-teal-600 font-bold" href="{{ path('program_season_show', {'programId': program.id ,'seasonId': season.id }) }}">
-		Retour
-	</a>
+
+
+	<div class="flex mx-auto">
+		{% if ep_prev %}
+			<a class="btn m-5 hover:bg-teal-600 " href="{{path('program_episode_show', {'program_id': program.id, 'season_id': season.id, 'episode_id': ep_prev.0.id})}}">
+				Prev
+			</a>
+		{% endif %}
+		<a class="btn h-fit m-5 hover:bg-teal-600 font-bold" href="{{ path('program_season_show', {'programId': program.id ,'seasonId': season.id }) }}">
+			Retour
+		</a>
+		{% if ep_next %}
+			<a class="btn m-5 hover:bg-teal-600 " href="{{path('program_episode_show', {'program_id': program.id, 'season_id': season.id, 'episode_id': ep_next.0.id})}}">
+				Next
+			</a>
+		{% endif %}
+	</div>
 {% endblock %}
