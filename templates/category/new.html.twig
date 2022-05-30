@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+{% block body %}
+	<div class="m-20">
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		<button class="btn mt-5 hover:bg-teal-600 " type="submit">Add category</button>
+		{{ form_end(form) }}
+	</div>
+{% endblock %}

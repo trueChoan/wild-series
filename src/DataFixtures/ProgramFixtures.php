@@ -28,7 +28,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         foreach (self::PROGRAMS as $key => $show) {
             $program = new Program();
             $program->setTitle($show['name']);
-            $program->setSeasonNumber($faker->numberBetween(5, 10));
+            $program->setSeasonNumber($faker->numberBetween(1, 10));
             $program->setSynopsis($faker->realText(300));
             $program->setPoster($show['poster']);
             $program->setNote(rand(0, 5));
