@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Program
+{% endblock %}
+
+{% block body %}
+	<h1>Edit Program</h1>
+
+	<div class="m-20 font-baloo">
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		<button class="btn mt-5 hover:bg-teal-600 " type="submit">update Program</button>
+		{{ form_end(form) }}
+	</div>
+
+	<a href="{{ path('program_show', {'id': program.id }) }}">back to list</a>
+
+{% endblock %}

@@ -13,7 +13,7 @@ class Episode
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: season::class,  inversedBy: 'episodes')]
+    #[ORM\ManyToOne(targetEntity: Season::class,  inversedBy: 'episodes')]
     private $season;
 
     #[ORM\Column(type: 'string', length: 255)]
