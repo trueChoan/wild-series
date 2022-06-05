@@ -21,6 +21,7 @@ class Actor
     #[ORM\ManyToMany(targetEntity: Program::class, inversedBy: 'actors')]
     private $programs;
 
+
     public function __construct()
     {
         $this->programs = new ArrayCollection();
@@ -36,6 +37,10 @@ class Actor
         return $this->name;
     }
 
+    public function getSelector(): string
+    {
+        return $this->getId() . ' - ' . $this->getName();
+    }
     public function setName(string $name): self
     {
         $this->name = $name;
