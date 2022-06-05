@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acteur
+{% endblock %}
+
+{% block body %}
+	<main class="m-20">
+		<h1>Acteur</h1>
+		<table class="table font-baloo">
+			<tbody>
+				<tr>
+					<th>Id</th>
+					<td>{{ actor.id }}</td>
+				</tr>
+				<tr>
+					<th>Nom</th>
+					<td>{{ actor.name }}</td>
+				</tr>
+				<tr>
+					<th>Séries</th>
+					{% for program in actor.programs %}
+						<td>
+							<a href="{{path('program_show', {'id': program.id})}}">
+								{{program.title}}</a>
+						</td>
+					{% endfor %}
+				</tr>
+			</tbody>
+		</table>
+	</main>
+
+	{# <a href="{{ path('app_episode_index') }}">back to list</a>
+															
+																<a href="{{ path('app_episode_edit', {'id': episode.id}) }}">edit</a>
+															
+																{{ include('episode/_delete_form.html.twig') }} #}
+{% endblock %}
