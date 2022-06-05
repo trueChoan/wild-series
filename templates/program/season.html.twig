@@ -41,7 +41,7 @@
 					Prev
 				</a>
 			{% endif %}
-			<a class="btn m-5 hover:bg-teal-600 " href="{{ path('program_show', {'id': program.id }) }}">
+			<a class="btn m-5 hover:bg-teal-600 " href="{{ path('program_show', {'slug': program.slug }) }}">
 				Retour à la liste des saisons
 			</a>
 			{% if season_next %}

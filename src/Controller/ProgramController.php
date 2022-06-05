@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping\Entity;
 use App\Repository\SeasonRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
+use App\Service\Slugify;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,20 +31,21 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', methods: ['GET'], name: 'show', requirements: ['id' => '\d+'])]
+    #[Route('/{slug}', methods: ['GET'], name: 'show')]
+    #[ParamConverter('program', options: ['mapping' => ['slug' => 'slug']])]
     public function show(
-        $id,
+        $slug,
         ProgramRepository $programRepository,
         SeasonRepository $seasonRepository,
     ): Response {
-        $program = $programRepository->findOneBy(['id' => $id]);
+        $program = $programRepository->findOneBySlug(['slug' => $slug]);
         if (!$program) {
             throw $this->createNotFoundException(
-                'Pas de Série avec id : ' . $id . ' trouvé dans la table'
+                'Pas de Série avec titre : ' . $slug . ' trouvé dans la table'
             );
         }
         return $this->render('program/show.html.twig', [
-            'id' => $id,
+            'slug' => $slug,
             'program' => $program,
             'seasons' => $seasonRepository->findAll()
         ]);
@@ -91,7 +93,8 @@ class ProgramController extends AbstractController
         Season $season,
         Episode $episode,
         EpisodeRepository $episodeRepository,
-        int $episode_id
+        int $episode_id,
+
     ) {
         if (!$episode_id) {
             throw $this->createNotFoundException(
@@ -111,13 +114,18 @@ class ProgramController extends AbstractController
     }
 
     #[Route('/new', name: 'new')]
-    public function newProgram(Request $request, ProgramRepository $programRepository): Response
-    {
+    public function newProgram(
+        Request $request,
+        ProgramRepository $programRepository,
+        Slugify $slugify
+    ): Response {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugify->generate($program->getTitle());
+            $program->setSlug($slug);
             $programRepository->add($program, true);
             return $this->redirectToRoute('program_index');
         }

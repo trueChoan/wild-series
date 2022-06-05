@@ -20,7 +20,7 @@
 					<th>Séries</th>
 					{% for program in actor.programs %}
 						<td>
-							<a href="{{path('program_show', {'id': program.id})}}">
+							<a href="{{path('program_show', {'slug': program.slug})}}">
 								{{program.title}}</a>
 						</td>
 					{% endfor %}
@@ -30,8 +30,8 @@
 	</main>
 
 	{# <a href="{{ path('app_episode_index') }}">back to list</a>
-															
-																<a href="{{ path('app_episode_edit', {'id': episode.id}) }}">edit</a>
-															
-																{{ include('episode/_delete_form.html.twig') }} #}
+																
+																	<a href="{{ path('app_episode_edit', {'id': episode.id}) }}">edit</a>
+																
+																	{{ include('episode/_delete_form.html.twig') }} #}
 {% endblock %}
