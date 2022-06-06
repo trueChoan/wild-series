@@ -26,8 +26,8 @@ class Slugify
         $lower =  mb_strtolower(trim($input));
         $regex = preg_replace($patterns, $replacements, $lower);
         $specialChar = preg_replace('/[^\s\w]/', '', $regex);
-        $slug = strtolower(preg_replace('/\s+/', '-', $specialChar));
+        $spaceReplace = preg_replace('/\s+/', '-', $specialChar);
 
-        return $slug;
+        return $spaceReplace;
     }
 }

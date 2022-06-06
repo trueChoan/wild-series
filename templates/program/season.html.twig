@@ -30,14 +30,14 @@
 
 				<li>{{episode.number}}
 					--
-					<a class="hover:underline" href="{{path('program_episode_show', {'program_id': program.id, 'season_id': season.id, 'episode_id': episode.id})}}">{{episode.title}}</a>
+					<a class="hover:underline" href="{{path('program_episode_show', {'program_slug': program.slug, 'season_slug': season.slug, 'episode_slug': episode.slug})}}">{{episode.title}}</a>
 
 				</li>
 			{% endfor %}
 		</ul>
 		<div class="flex">
 			{% if season_prev %}
-				<a class="btn m-5 hover:bg-teal-600 " href="{{ path('program_season_show', {'programId': program.id ,'seasonId': season_prev.0.id }) }}">
+				<a class="btn m-5 hover:bg-teal-600 " href="{{ path('program_season_show', {'slug': program.slug ,'season_slug': season_prev.0.slug }) }}">
 					Prev
 				</a>
 			{% endif %}
@@ -45,7 +45,7 @@
 				Retour à la liste des saisons
 			</a>
 			{% if season_next %}
-				<a class="btn m-5 hover:bg-teal-600 " href="{{ path('program_season_show', {'programId': program.id ,'seasonId': season_next.0.id }) }}">
+				<a class="btn m-5 hover:bg-teal-600 " href="{{ path('program_season_show', {'slug': program.slug ,'season_slug': season_next.0.slug }) }}">
 					Next
 				</a>
 			{% endif %}

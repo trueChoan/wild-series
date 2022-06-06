@@ -51,20 +51,20 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{programId<\d+>}/season/{seasonId<\d+>}', methods: ['GET'], name: 'season_show')]
-    #[ParamConverter('program', options: ['mapping' => ['programId' => 'id']])]
-    #[ParamConverter('season', options: ['mapping' => ['seasonId' => 'id']])]
+    #[Route('/{slug}/season/{season_slug}', methods: ['GET'], name: 'season_show')]
+    #[ParamConverter('program', options: ['mapping' => ['slug' => 'slug']])]
+    #[ParamConverter('season', options: ['mapping' => ['season_slug' => 'slug']])]
     public function showSeason(
         Program $program,
         Season $season,
-        int $seasonId,
+
         SeasonRepository $seasonRepository,
         EpisodeRepository $episodeRepository
     ): Response {
 
-        if (!$seasonId) {
+        if (!$season) {
             throw $this->createNotFoundException(
-                'Pas de saison avec id : ' . $seasonId . ' trouvée dans la table'
+                'Pas de saison  : ' . $season . ' trouvée dans la table'
             );
         }
         $seasonTotal = $program->getSeasonNumber();
@@ -84,21 +84,21 @@ class ProgramController extends AbstractController
             'episodes' => $episodeRepository->findAll()
         ]);
     }
-    #[Route('/{program_id<\d+>}/season/{season_id<\d+>}/episode/{episode_id<\d+>}', name: 'episode_show')]
-    #[ParamConverter('program', options: ['mapping' => ['program_id' => 'id']])]
-    #[ParamConverter('season', options: ['mapping' => ['season_id' => 'id']])]
-    #[ParamConverter('episode', options: ['mapping' => ['episode_id' => 'id']])]
+    #[Route('/{program_slug}/season/{season_slug}/episode/{episode_slug}', name: 'episode_show')]
+    #[ParamConverter('program', options: ['mapping' => ['program_slug' => 'slug']])]
+    #[ParamConverter('season', options: ['mapping' => ['season_slug' => 'slug']])]
+    #[ParamConverter('episode', options: ['mapping' => ['episode_slug' => 'slug']])]
     public function showEpisode(
         Program $program,
         Season $season,
         Episode $episode,
         EpisodeRepository $episodeRepository,
-        int $episode_id,
+
 
     ) {
-        if (!$episode_id) {
+        if (!$episode) {
             throw $this->createNotFoundException(
-                'Pas d\'épisode avec id : ' . $episode_id . ' trouvée dans la table'
+                'Pas d\'épisode : ' . $episode . ' trouvée dans la table'
             );
         }
         $episodeNumber = $episode->getNumber();
