@@ -1,0 +1,24 @@
+{% extends "layoutEmail.html.twig" %}
+{% block title %}
+	{{ parent() }}
+	Episode
+{% endblock %}
+{% block body %}
+	<h1>New Episode
+		{{ episode.title }}
+		created</h1>
+	<p>Hello, the new episode :
+		{{ episode.title }}
+		number
+		{{episode.number}}
+		from Show
+		{{episode.season.program.title}}
+		season
+		{{episode.season.number}}
+		has been created on Wild Series</p>
+	<p>Synopsis :{{episode.synopsis }}
+	</p>
+	<a style="margin-top:10px; background-color: turquoise; border: none; border-radius: 5px; color: #333; /* Dark grey */ padding: 15px 32px" href="http://127.0.0.1:8000{{path('program_episode_show', {'program_slug': episode.season.program.slug, 'season_slug': episode.season.slug, 'episode_slug': episode.slug})}}">voir l'épisode</a>
+
+
+{% endblock %}

@@ -5,18 +5,19 @@ namespace App\Controller;
 use App\Entity\Season;
 use App\Entity\Episode;
 use App\Entity\Program;
+use App\Service\Slugify;
 use App\Form\ProgramType;
 use Doctrine\ORM\Mapping\Entity;
 use App\Repository\SeasonRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
-use App\Service\Slugify;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-
+use Symfony\Component\Mime\Email;
 
 #[Route('/program', name: 'program_')]
 class ProgramController extends AbstractController
@@ -113,11 +114,12 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'new')]
+    #[Route('/new', name: 'new', priority: 1)]
     public function newProgram(
         Request $request,
         ProgramRepository $programRepository,
-        Slugify $slugify
+        Slugify $slugify,
+        MailerInterface $mailer
     ): Response {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -127,6 +129,14 @@ class ProgramController extends AbstractController
             $slug = $slugify->generate($program->getTitle());
             $program->setSlug($slug);
             $programRepository->add($program, true);
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to('tierrylermite@gmail.com')
+                ->subject('Une nouvelle série vient d\'être publiée !')
+                ->html($this->renderView('Program/newProgramEmail.html.twig', [
+                    'program' => $program
+                ]));
+            $mailer->send($email);
             return $this->redirectToRoute('program_index');
         }
         return $this->renderForm('program/new.html.twig', [
