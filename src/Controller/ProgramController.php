@@ -108,8 +108,12 @@ class ProgramController extends AbstractController
                 'Pas d\'épisode : ' . $episode . ' trouvée dans la table'
             );
         }
-        $user = $userService->getUser();
-        $comment = new Comment($episode, $user);
+        $comment = null;
+        if ($user = $userService->getUser()) {
+            $user = $userService->getUser();
+
+            $comment = new Comment($episode, $user);
+        }
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
