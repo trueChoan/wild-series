@@ -23,6 +23,8 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
     ];
 
+    private Slugify $slug;
+
     public function __construct(Slugify $slugify)
     {
         $this->slug = $slugify;

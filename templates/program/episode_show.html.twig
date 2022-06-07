@@ -22,6 +22,28 @@
 
 		</div>
 
+		{% for comment in episode.comments %}
+
+			<div class="mb-10 font-baloo ">
+
+				<p class="font-bold">{{comment.author.nickname}}
+				</p>
+				<p>
+					{{comment.comment}}
+				</p>
+				<p>Note :
+					{{comment.rate}}
+					/10
+				</p>
+			</div>
+		{% endfor %}
+		{% if app.user %}
+			{{ form_start(form) }}
+			{{ form_widget(form) }}
+			<button class="btn">{{ button_label|default('Save') }}</button>
+			{{ form_end(form) }}
+		{% endif %}
+
 	</div>
 
 

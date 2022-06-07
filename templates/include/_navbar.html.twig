@@ -1,4 +1,4 @@
-<nav class="border-gray-200 px-2  mb-20 sm:px-4 py-5 bg-dark text-yellow">
+<nav class="border-gray-200 px-2  mb-20 sm:px-2 py-2 bg-dark text-yellow">
 	<div class="container flex flex-wrap justify-between items-center mx-auto">
 		<a href="/" class="flex items-center">
 			<img src="{{ asset('build/images/logo.png') }}" class="mr-3 h-6 sm:h-9 img-logo" alt="Wild series logo">
@@ -8,29 +8,46 @@
 		<div class="flex items-center md:order-2">
 			<button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
 				<span class="sr-only">Open user menu</span>
-				<img class="w-8 h-8 rounded-full" src="https://fakeimg.pl/50x50/00B9AE/" alt="user photo">
+				{% if app.user %}
+					<img class="w-12 h-12 rounded-full" src="{{asset('build/images/user.jpg')}}" alt="user photo">
+				{% else %}
+					<img class="w-10 h-10 rounded-full" src="{{asset('build/images/user.svg')}}" alt="user photo">
+				{% endif %}
 			</button>
 
 			<div class="hidden z-50 my-4 font-bangers  text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(1091px, 443px);" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top">
 				<div class="py-3 px-4">
-					<span class="block text-sm font-bangers  text-gray-900 dark:text-white">Johan Doe</span>
-					<span class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">johan@doe.com</span>
+					{% if app.user %}
+						<span class="block text-sm font-bangers  text-gray-900 dark:text-white">{{app.user.nickname}}</span>
+						<span class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">{{app.user.email}}</span>
+					{% endif %}
 				</div>
+
 				<ul class="py-1" aria-labelledby="dropdown">
-					<li>
-						<a href="#" class="block py-2 px-4 text-sm text-green hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-teal-600 dark:hover:text-white">Dashboard</a>
-					</li>
-					<li>
-						<a href="#" class="block py-2 px-4 text-sm text-green hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
-					</li>
-					<li>
-						<a href="#" class="block py-2 px-4 text-sm text-green hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
-					</li>
-					<li>
-						<a href="#" class="block py-2 px-4 text-sm text-green hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
-					</li>
+					{% if app.user %}
+						<li>
+							<a href="{{path('program_new')}}" class="block py-2 px-4 text-sm text-green hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-teal-600 dark:hover:text-white">Dashboard</a>
+						</li>
+						<li>
+							<a href="#" class="block py-2 px-4 text-sm text-green hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Favoris</a>
+						</li>
+
+						<li>
+							<a href="{{ path('app_logout') }}" class="block py-2 px-4 text-sm text-green hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+						</li>
+					{% else %}
+						<li>
+							<a href="{{ path('app_register') }}" class="block py-2 px-4 text-sm text-green hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-teal-600 dark:hover:text-white">Register</a>
+						</li>
+						<li>
+							<a href="{{ path('login') }}" class="block py-2 px-4 text-sm text-green hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Login</a>
+						</li>
+					{% endif %}
 				</ul>
+
 			</div>
+
+
 			<button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
 				<span class="sr-only">Open main menu</span>
 				<svg class="w-6 h-6" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -89,13 +106,11 @@
 							</li>
 						</ul>
 						<div class="py-1">
-							<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">Tous</a>
+							<a href="{{path('actor_index')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">Tous</a>
 						</div>
 					</div>
 				</li>
-				<li>
-					<a href="#" class=" flex  text-green items-center justify-between w-full py-2 pl-3 pr-4 font-medium md:hover:text-teal-600">Mes Favoris</a>
-				</li>
+
 				<li>
 					<a href="#" class="block w-full text-green py-2 pl-3 pr-4 font-medium md:hover:text-teal-600">Contact</a>
 				</li>

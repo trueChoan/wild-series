@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Season;
 use App\Entity\Episode;
 use App\Entity\Program;
+use App\Entity\User;
 use App\Service\Slugify;
 use App\Form\ProgramType;
+use App\Form\CommentType;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping\Entity;
 use App\Repository\SeasonRepository;
 use App\Repository\EpisodeRepository;
@@ -18,6 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Mime\Email;
+use App\Service\UserService;
 
 #[Route('/program', name: 'program_')]
 class ProgramController extends AbstractController
@@ -85,32 +90,47 @@ class ProgramController extends AbstractController
             'episodes' => $episodeRepository->findAll()
         ]);
     }
-    #[Route('/{program_slug}/season/{season_slug}/episode/{episode_slug}', name: 'episode_show')]
+    #[Route('/{program_slug}/season/{season_slug}/episode/{episode_slug}',  methods: ['GET', 'POST'], name: 'episode_show')]
     #[ParamConverter('program', options: ['mapping' => ['program_slug' => 'slug']])]
     #[ParamConverter('season', options: ['mapping' => ['season_slug' => 'slug']])]
     #[ParamConverter('episode', options: ['mapping' => ['episode_slug' => 'slug']])]
     public function showEpisode(
+        Request $request,
         Program $program,
         Season $season,
         Episode $episode,
         EpisodeRepository $episodeRepository,
-
-
+        CommentRepository $commentRepository,
+        UserService $userService
     ) {
         if (!$episode) {
             throw $this->createNotFoundException(
                 'Pas d\'épisode : ' . $episode . ' trouvée dans la table'
             );
         }
+        $user = $userService->getUser();
+        $comment = new Comment($episode, $user);
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $commentRepository->add($comment, true);
+
+            return $this->redirectToRoute('program_episode_show');
+        }
+
         $episodeNumber = $episode->getNumber();
         $epPrev = $episodeRepository->findBy(['number' => $episodeNumber - 1], null, 1) ?? null;
         $epNext = $episodeRepository->findBy(['number' => $episodeNumber + 1], null, 1) ?? null;
-        return $this->render('program/episode_show.html.twig', [
+        return $this->renderForm('program/episode_show.html.twig', [
             'program' => $program,
             'season' => $season,
             'episode' => $episode,
             'ep_prev' => $epPrev,
-            'ep_next' => $epNext
+            'ep_next' => $epNext,
+            'form' => $form,
+            'comments' => $commentRepository->findAll()
         ]);
     }
 
