@@ -121,7 +121,11 @@ class ProgramController extends AbstractController
 
             $commentRepository->add($comment, true);
 
-            return $this->redirectToRoute('program_episode_show');
+            return $this->redirectToRoute('program_episode_show', [
+                'program_slug' => $program->getSlug(),
+                'season_slug' => $season->getSlug(),
+                'episode_slug' => $episode->getSlug()
+            ]);;
         }
 
         $episodeNumber = $episode->getNumber();
